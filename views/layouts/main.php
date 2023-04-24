@@ -30,7 +30,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <?php $this->beginBody() ?>
 
 <header>
-    <img src="<?= Yii::$app->request->baseUrl?>/web/img/logo.png" width="200px" alt="photo">
+    <a href="<?= Yii::$app->urlManager->createUrl('/') ?>"><img src="<?= Yii::$app->request->baseUrl?>/web/img/logo.png" width="200px" alt="photo"></a>
     <div>
         <div class="header_item">
             <img src="<?= Yii::$app->request->baseUrl?>/web/img/avatar.png" width="60px" alt="avatar">
@@ -46,17 +46,35 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </header>
 
 <main class="">
-    <div class="container">
+        <div class="wrap">
+            <div class="menu">
+                <div>
+                    <?php if (Yii::$app->user->isGuest): ?>
+                        <a href="<?= Yii::$app->urlManager->createUrl('site/login')?>">Вход</a>
+                        <a href="">Регистрация</a>
+                    <?php endif ?>
+                        <a href="">Профиль</a>
+                        <a href="">Задачи</a>
+                        <a href="">Заметки</a>
+                        <a href="">Список покупок</a>
+                        <a href="">Статистика</a>
+                </div>
 
-        <?= $content ?>
-    </div>
+            </div>
+            <div class="content">
+                <?= $content ?>
+            </div>
+        </div>
+
 </main>
 
 <footer class="">
-
+    <p>© MyDay 2023. Все права защищены.</p>
 </footer>
 
-<?php $this->endBody() ?>
+<?php if (class_exists('yii\debug\Module')) {
+    $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
+} $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

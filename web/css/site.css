@@ -15,11 +15,20 @@
     padding: 0;
     margin: 0;
 }
-main {
-    padding: 70px 15px 20px;
-    background-color: red;
+button{
+    background-color: #9699CA;
+    color: white;
+    border: none;
+    border-radius: 10px;
 }
+.button{
+    margin-top:30px;
+    margin-left: 175px ;
+    padding: 9px 35px;
+    font-size: 14px;
+    letter-spacing: 2px;
 
+}
 p{
     padding:0;
     margin: 0;
@@ -27,6 +36,7 @@ p{
 a{
     text-decoration: none;
     color:black;
+    font-size: 14px;
 }
 /* header */
 header{
@@ -42,22 +52,86 @@ header div{
 
 }
 header > div{
-    margin-right:600px;
+    margin-right:650px;
 
 }
 .header_item > a{
     margin: 0 5px;
 
 }
-.footer {
-    background-color: #f5f5f5;
-    font-size: .9em;
-    height: 60px;
+/* main */
+.wrap {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1960px;
+    min-height: 620px;
+    position: relative;
+
 }
 
-.footer > .container {
-    padding-right: 15px;
-    padding-left: 15px;
+.menu {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    background: #F47D6C;
+}
+.menu > div{
+    margin: 20px 0;
+}
+.menu > div a{
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    font-size: 16px;
+}
+/* content - index */
+.content {
+    min-height: 620px;
+    margin-left: 250px;
+    padding: 1.5em;
+    background: url("../../web/img/photo4.jpg") no-repeat;
+    /*filter: blur(10px);*/
+    /*opacity: 2%;*/
+    background-size: cover;
+
+}
+.site-index{
+
+}
+.site-index > h1{
+    margin: 50px 0 30px 50px;
+}
+.site-index > p{
+    margin: 0 0 50px 50px;
+    line-height: 40px;
+    letter-spacing: 2px;
+    width: 60%;
+    font-size: 18px;
+}
+.site-index > button{
+    margin: 0 0 50px 100px;
+    padding: 10px 35px;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+/* login */
+.site-login{
+    margin: 40px 0;
+}
+.container{
+    width: 500px;
+    margin: 0 auto;
+}
+.login_h1{
+    text-align: center;
+}
+footer {
+
+    font-size: 10px;
+    padding: 20px 0 20px 20px;
+
 }
 
 .not-set {

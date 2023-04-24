@@ -19,7 +19,14 @@ class LoginForm extends Model
 
     private $_user = false;
 
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Логин',
+            'password' => 'Пароль',
 
+        ];
+    }
     /**
      * @return array the validation rules.
      */
@@ -64,6 +71,7 @@ class LoginForm extends Model
         }
         return false;
     }
+
 
     /**
      * Finds user by [[username]]
