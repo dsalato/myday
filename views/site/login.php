@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
         <?= $form->field($model, 'password')->passwordInput() ?>
+        <p>Нет учетной записи?<a class="a" href=""> Создайте ее!</a></p>
 
         <button class="button">Войти</button>
 

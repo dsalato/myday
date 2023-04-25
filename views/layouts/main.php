@@ -28,10 +28,16 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </head>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
-
+<?php if (Yii::$app->user->isGuest): ?>
+    <a class="logo_a" href="<?= Yii::$app->urlManager->createUrl('/') ?>"><img src="<?= Yii::$app->request->baseUrl?>/web/img/logo.png" width="200px" alt="photo"></a>
+<?php endif ?>
 <header>
+
+    <?php if (!Yii::$app->user->isGuest): ?>
     <a href="<?= Yii::$app->urlManager->createUrl('/') ?>"><img src="<?= Yii::$app->request->baseUrl?>/web/img/logo.png" width="200px" alt="photo"></a>
+
     <div>
+
         <div class="header_item">
             <img src="<?= Yii::$app->request->baseUrl?>/web/img/avatar.png" width="60px" alt="avatar">
             <a href="">Ольга Петрова</a>
@@ -42,7 +48,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
 
     </div>
-    <a href="">Выйти из аккаунта</a>
+    <?= Html::a("Выйти из аккаунта",'site/logout', ['data' => ['method' => 'post'], ['class' => 'while text-center']]);?>
+    <?php endif ?>
 </header>
 
 <main class="">
@@ -52,12 +59,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <?php if (Yii::$app->user->isGuest): ?>
                         <a href="<?= Yii::$app->urlManager->createUrl('site/login')?>">Вход</a>
                         <a href="">Регистрация</a>
-                    <?php endif ?>
+                    <?php else: ?>
                         <a href="">Профиль</a>
                         <a href="">Задачи</a>
                         <a href="">Заметки</a>
                         <a href="">Список покупок</a>
                         <a href="">Статистика</a>
+                    <?php endif ?>
                 </div>
 
             </div>

@@ -2,54 +2,114 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use Yii;
+use yii\web\IdentityInterface;
+/**
+ * This is the model class for table "users".
+ *
+ * @property int $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $email
+ * @property string $username
+ * @property string $password
+ * @property string|null $photo
+ * @property int|null $role
+ *
+ * @property Notes[] $notes
+ * @property Products[] $products
+ * @property Tasks[] $tasks
+ */
+class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'users';
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['first_name', 'last_name', 'email', 'username', 'password'], 'required'],
+            [['role'], 'integer'],
+            [['first_name', 'last_name', 'email', 'username', 'password', 'photo'], 'string', 'max' => 255],
+        ];
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'email' => 'Email',
+            'username' => 'Username',
+            'password' => 'Password',
+            'photo' => 'Photo',
+            'role' => 'Role',
+        ];
+    }
+
+    /**
+     * Gets query for [[Notes]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNotes()
+    {
+        return $this->hasMany(Notes::class, ['id_user' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Products]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasMany(Products::class, ['id_user' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Tasks]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasks()
+    {
+        return $this->hasMany(Tasks::class, ['id_user' => 'id']);
+    }
     /**
      * {@inheritdoc}
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return static::findOne($id);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function getAuthKey()
+    {
+
+    }
+
+    public function validateAuthKey($authKey)
+    {
+
+    }
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return static::findOne(['access_token' => $token]);
     }
-
     /**
      * Finds user by username
      *
@@ -75,21 +135,6 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
 
     /**
      * Validates password
