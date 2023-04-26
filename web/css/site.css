@@ -46,6 +46,7 @@ p{
 }
 .a{
     font-size: 16px;
+    color:#F47D6C;
 }
 a{
     text-decoration: none;
@@ -80,7 +81,8 @@ header{
 }
 
 .logo_a{
-margin-left: 30px;
+    margin-left: 30px;
+    width:150px;
 }
 header div{
     display: flex;

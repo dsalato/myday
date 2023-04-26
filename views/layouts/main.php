@@ -58,7 +58,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <div>
                     <?php if (Yii::$app->user->isGuest): ?>
                         <a href="<?= Yii::$app->urlManager->createUrl('site/login')?>">Вход</a>
-                        <a href="">Регистрация</a>
+                        <a href="<?= Yii::$app->urlManager->createUrl('site/register')?>">Регистрация</a>
                     <?php else: ?>
                         <a href="">Профиль</a>
                         <a href="">Задачи</a>

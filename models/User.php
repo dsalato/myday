@@ -22,7 +22,8 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
-
+    public $repeat_password;
+    public $file;
     /**
      * {@inheritdoc}
      */
@@ -31,6 +32,19 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return 'users';
     }
 
+
+    public function attributeLabels()
+    {
+        return [
+            'first_name' => 'Имя',
+            'last_name' => 'Фамилия',
+            'email' => 'Почта',
+            'username' => 'Логин',
+            'password' => 'Пароль',
+            'repeat_password' => 'Повторите пароль',
+            'file' => 'Аватар',
+        ];
+    }
     /**
      * {@inheritdoc}
      */
@@ -40,25 +54,34 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['first_name', 'last_name', 'email', 'username', 'password'], 'required'],
             [['role'], 'integer'],
             [['first_name', 'last_name', 'email', 'username', 'password', 'photo'], 'string', 'max' => 255],
+            [['first_name','last_name'], 'match', 'pattern' => '/^[а-яА-ЯёЁ ]+$/u'],
+            [['username','password'], 'match', 'pattern' => '/^[a-zA-Z0-9 ]+$/u'],
+            [['email'], 'email'],
+            [['username'], 'unique'],
+            [['repeat_password'], 'compare', 'compareAttribute' => 'password'],
+            [
+                ['file'], 'file',
+                'skipOnEmpty' => false,
+                'extensions' => 'jpg, png, jpeg, bmp', 'maxSize' => 1024 * 1024 * 10
+            ]
+
         ];
     }
-
+    public function upload()
+    {
+        if (!$this->file)
+            return false;
+        $name = '/web/uploads/' . time() . '.' . $this->file->extension;
+        $filename = Yii::getAlias('@webroot') . $name;
+        $url = Yii::getAlias('@web') . $name;
+        if ($this->file->saveAs($filename))
+            return $url;
+        return false;
+    }
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
-            'email' => 'Email',
-            'username' => 'Username',
-            'password' => 'Password',
-            'photo' => 'Photo',
-            'role' => 'Role',
-        ];
-    }
+
 
     /**
      * Gets query for [[Notes]].
