@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -84,7 +85,7 @@ class SiteController extends Controller
                 $model->photo = $uploadedFileName;
                 // принудительная установка роли
                 $model->role = 0;
-                $model->password = md5($model->password);
+                $model->password = $model->password;
                 $model->save(false);
                 // установка флеш-сообщения, для улучшения юзабилити
                 Yii::$app->session
@@ -150,13 +151,5 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
+
 }

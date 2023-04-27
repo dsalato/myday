@@ -15,6 +15,7 @@
     padding: 0;
     margin: 0;
 }
+
 button{
     background-color: #9699CA;
     color: white;
@@ -40,6 +41,13 @@ button{
     letter-spacing: 2px;
 
 }
+.button-register{
+    margin-top:30px;
+    margin-left: 115px ;
+    padding: 9px 35px;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
 p{
     padding:0;
     margin: 0;
@@ -56,9 +64,15 @@ a{
 /* header */
 header{
     display: flex;
-    justify-content: space-around;
     align-items: center;
+    position: relative;
+    margin-left: 10px;
 
+}
+.header_img{
+    border-radius: 80%;
+    width: 50px;
+    height: 50px;
 }
 .form-control{
     border:1px solid #77C7B9;
@@ -79,14 +93,18 @@ header{
     border:1px solid #77C7B9;
     box-shadow: 0 0 0 0.25rem rgba(119, 199, 185, 0.25);
 }
-
+header > a:last-of-type{
+    position:absolute;
+    right: 50px;
+    top: 28px;
+    z-index: 1;
+}
 .logo_a{
     margin-left: 30px;
     width:150px;
 }
 header div{
     display: flex;
-    justify-content: space-around;
     align-items: center;
     margin: 0 30px;
 
@@ -107,7 +125,6 @@ header > div{
     margin-left: auto;
     margin-right: auto;
     max-width: 1960px;
-    min-height: 620px;
     position: relative;
 
 }
@@ -131,10 +148,9 @@ header > div{
 }
 /* content - index */
 .content {
-    min-height: 620px;
     margin-left: 250px;
     padding: 1.5em;
-    background: url("../../web/img/photo4.jpg") no-repeat;
+    background: url("../../web/img/photo.jpg") no-repeat;
     /*filter: blur(10px);*/
     /*opacity: 2%;*/
     background-size: cover;
@@ -163,6 +179,12 @@ header > div{
 .site-login{
     margin: 40px 0;
 }
+.site-register{
+    margin: 40px 0;
+}
+.user-profile{
+    margin: 40px 0;
+}
 .container{
     width: 500px;
     margin: 0 auto;
@@ -170,8 +192,18 @@ header > div{
 .login_h1{
     text-align: center;
 }
-footer {
+/* profile */
+.profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 60px 0;
 
+}
+.profile div{
+    margin: 0 10px;
+}
+footer {
     font-size: 10px;
     padding: 20px 0 20px 20px;
 

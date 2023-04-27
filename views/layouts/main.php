@@ -39,8 +39,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <div>
 
         <div class="header_item">
-            <img src="<?= Yii::$app->request->baseUrl?>/web/img/avatar.png" width="60px" alt="avatar">
-            <a href="">Ольга Петрова</a>
+            <img class="header_img" src="<?= Yii::$app->user->identity->photo?>" width="60px" alt="avatar">
+            <a href="<?= Yii::$app->urlManager->createUrl('user/profile')?>"><?= Yii::$app->user->identity->username?></a>
+
         </div>
         <div class="header_item">
             <img src="<?= Yii::$app->request->baseUrl?>/web/img/setting.png" width="20px" alt="setting">
@@ -48,28 +49,34 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
 
     </div>
-    <?= Html::a("Выйти из аккаунта",'site/logout', ['data' => ['method' => 'post'], ['class' => 'while text-center']]);?>
+    <?= Html::a("Выйти из аккаунта",['site/logout'],
+            ['data' => ['method' => 'post'],
+                ['class' => 'while text-center']]);?>
     <?php endif ?>
 </header>
 
-<main class="">
-        <div class="wrap">
+<main class="h-100">
+        <div class="wrap h-100">
             <div class="menu">
                 <div>
                     <?php if (Yii::$app->user->isGuest): ?>
                         <a href="<?= Yii::$app->urlManager->createUrl('site/login')?>">Вход</a>
                         <a href="<?= Yii::$app->urlManager->createUrl('site/register')?>">Регистрация</a>
                     <?php else: ?>
-                        <a href="">Профиль</a>
+                        <?php if (Yii::$app->user->identity->role): ?>
+                            <a href="<?= Yii::$app->urlManager->createUrl('user/users')?>">Пользователи</a>
+                        <?php else: ?>
+                        <a href="<?= Yii::$app->urlManager->createUrl('user/profile')?>">Профиль</a>
                         <a href="">Задачи</a>
                         <a href="">Заметки</a>
                         <a href="">Список покупок</a>
                         <a href="">Статистика</a>
+                        <?php endif ?>
                     <?php endif ?>
                 </div>
 
             </div>
-            <div class="content">
+            <div class="content h-100">
                 <?= $content ?>
             </div>
         </div>
