@@ -15,7 +15,37 @@
     padding: 0;
     margin: 0;
 }
+.summary{
+    display: none;
+}
+.btn-primary{
+    background-color: #9699CA;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+.btn-primary:hover{
+    background-color: rgb(204, 207, 246);
+}
+.btn-primary:active{
+    background-color: rgb(204, 207, 246);
 
+}
+.btn-danger{
+    background-color: #77C7B9;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+.btn-danger:hover{
+    background-color: rgba(119, 199, 185, 0.25);
+}
+.btn-danger:active{
+    background-color: rgba(119, 199, 185, 0.25);
+}
+.user-update > h1{
+    display: none;
+}
 button{
     background-color: #9699CA;
     color: white;
@@ -44,6 +74,13 @@ button{
 .button-register{
     margin-top:30px;
     margin-left: 115px ;
+    padding: 9px 35px;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+.button-edit{
+    margin-top:30px;
+    margin-left: 145px ;
     padding: 9px 35px;
     font-size: 14px;
     letter-spacing: 2px;

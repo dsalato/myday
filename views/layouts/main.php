@@ -45,7 +45,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
         <div class="header_item">
             <img src="<?= Yii::$app->request->baseUrl?>/web/img/setting.png" width="20px" alt="setting">
-            <a href="">Настройка аккаунта</a>
+            <a href="<?= Yii::$app->urlManager->createUrl('user/update?id=' . Yii::$app->user->identity->id)?>">Настройка аккаунта</a>
         </div>
 
     </div>
@@ -64,7 +64,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <a href="<?= Yii::$app->urlManager->createUrl('site/register')?>">Регистрация</a>
                     <?php else: ?>
                         <?php if (Yii::$app->user->identity->role): ?>
-                            <a href="<?= Yii::$app->urlManager->createUrl('user/users')?>">Пользователи</a>
+                            <a href="<?= Yii::$app->urlManager->createUrl('user/index')?>">Пользователи</a>
                         <?php else: ?>
                         <a href="<?= Yii::$app->urlManager->createUrl('user/profile')?>">Профиль</a>
                         <a href="">Задачи</a>
