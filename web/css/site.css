@@ -46,6 +46,12 @@
 .user-update > h1{
     display: none;
 }
+.note-create > h1{
+    text-align: center;
+}
+.note-update > h1{
+    text-align: center;
+}
 button{
     background-color: #9699CA;
     color: white;
@@ -193,9 +199,6 @@ header > div{
     background-size: cover;
 
 }
-.site-index{
-
-}
 .site-index > h1{
     margin: 50px 0 30px 50px;
 }
@@ -222,12 +225,53 @@ header > div{
 .user-profile{
     margin: 40px 0;
 }
+.note-list{
+    margin: 40px 0;
+}
 .container{
     width: 500px;
     margin: 0 auto;
 }
 .login_h1{
     text-align: center;
+}
+/* list */
+.list{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.button-list{
+    font-family:"MontserratRegular", serif;
+    padding: 9px 35px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    background-color: #9699CA;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+.notes{
+    width:100%;
+    border:2px solid #77C7B9;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0;
+    padding: 20px 0;
+}
+.notes p{
+    margin-left: 20px;
+}
+.notes div{
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+
+}
+.notes div input{
+    margin: 0 3px;
 }
 /* profile */
 .profile{

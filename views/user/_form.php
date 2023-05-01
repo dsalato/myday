@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
             'template' => "{label}\n{input}\n{error}",
             'labelOptions' => ['class' => 'col-form-label'],
             'inputOptions' => ['class' => 'col-lg-3 form-control'],
-            'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
+            'errorOptions' => ['class' => 'col-lg-7'],
         ],
     ]); ?>
 

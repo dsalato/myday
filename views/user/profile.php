@@ -18,8 +18,7 @@ $this->title = 'Профиль';
                 </div>
             </div>
             <div>
-                <img src="<?= Yii::$app->request->baseUrl?>/web/img/delete.png" width="20px" alt="удалить">
-                <img src="<?= Yii::$app->request->baseUrl?>/web/img/edit.png" width="20px" alt="изменить">
+                <a href="<?= Yii::$app->urlManager->createUrl('user/update?id=' . Yii::$app->user->identity->id)?>"><img src="<?= Yii::$app->request->baseUrl?>/web/img/edit.png" width="20px" alt="изменить"></a>
             </div>
         </div>
     </div>
