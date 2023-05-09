@@ -10,7 +10,9 @@ use Yii;
  * @property int $id
  * @property int $id_user
  * @property string $name
+ * @property string $description
  * @property int|null $priority
+ * @property int|null $done
  *
  * @property Users $user
  */
@@ -30,10 +32,11 @@ class Note extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'id_user', 'name'], 'required'],
-            [['id', 'id_user', 'priority'], 'integer'],
+            [['id_user', 'name', 'description'], 'required'],
+            [['id_user', 'priority', 'done'], 'integer'],
+            [['description'], 'string'],
             [['name'], 'string', 'max' => 255],
-            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['id_user' => 'id']],
+            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
 
@@ -45,8 +48,10 @@ class Note extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_user' => 'Id User',
-            'name' => 'Name',
-            'priority' => 'Priority',
+            'name' => 'Название',
+            'description' => 'Описание',
+            'priority' => 'Срочно',
+            'done' => 'Выполнено',
         ];
     }
 
@@ -57,6 +62,6 @@ class Note extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::class, ['id' => 'id_user']);
+        return $this->hasOne(User::class, ['id' => 'id_user']);
     }
 }

@@ -21,13 +21,11 @@ use yii\widgets\ActiveForm;
             ],
         ]); ?>
 
-    <?= $form->field($model, 'id')->textInput() ?>
-
-    <?= $form->field($model, 'id_user')->textInput() ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'description')->textarea(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'priority')->textInput() ?>
+    <?= $form->field($model, 'priority')->checkbox([ 'value' => '1', 'checked ' => true]) ?>
 
     <button class="button-edit">Готово</button>
 

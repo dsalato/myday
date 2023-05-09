@@ -11,9 +11,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="user-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="user-profile">
+    <div class="container">
+    <h1 class="login_h1"><?= Html::encode($this->title) ?></h1>
 
 
     <?= DetailView::widget([
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]) ?>
-    <p>
+    <p class="p_view">
         <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -39,4 +39,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+    </div>
 </div>

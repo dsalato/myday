@@ -225,6 +225,9 @@ header > div{
 .user-profile{
     margin: 40px 0;
 }
+.p_view{
+    text-align: center;
+}
 .note-list{
     margin: 40px 0;
 }
@@ -264,7 +267,11 @@ header > div{
 .notes p{
     margin-left: 20px;
 }
-.notes div{
+h5{
+    font-family:"MontserratRegular", serif;
+    margin-left: 20px;
+}
+.notes_btn{
     margin-right: 20px;
     display: flex;
     align-items: center;

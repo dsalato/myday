@@ -77,8 +77,9 @@ class NoteController extends Controller
         $model = new Note();
 
         if ($this->request->isPost) {
+            $model->id_user = Yii::$app->user->identity->id;
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['list', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -101,7 +102,7 @@ class NoteController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['list', 'id' => $model->id]);
         }
 
         return $this->render('update', [

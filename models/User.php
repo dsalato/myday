@@ -90,7 +90,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getNotes()
     {
-        return $this->hasMany(Notes::class, ['id_user' => 'id']);
+        return $this->hasMany(Note::class, ['id_user' => 'id']);
     }
 
     /**
