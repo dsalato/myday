@@ -215,6 +215,29 @@ header > div{
     font-size: 14px;
     letter-spacing: 2px;
 }
+.view_user{
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px 0;
+}
+.data{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+.data > p{
+    margin:0 40px;
+}
+.task_content{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.task_p{
+    margin-left:40px ;
+}
 /* login */
 .site-login{
     margin: 40px 0;
@@ -263,6 +286,9 @@ header > div{
     align-items: center;
     margin: 30px 0;
     padding: 20px 0;
+}
+.task{
+    width: 50%;
 }
 .notes p{
     margin-left: 20px;

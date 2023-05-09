@@ -67,7 +67,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             <a href="<?= Yii::$app->urlManager->createUrl('user/index')?>">Пользователи</a>
                         <?php else: ?>
                         <a href="<?= Yii::$app->urlManager->createUrl('user/profile')?>">Профиль</a>
-                        <a href="">Задачи</a>
+                        <a href="<?= Yii::$app->urlManager->createUrl('task/list')?>">Задачи</a>
                         <a href="<?= Yii::$app->urlManager->createUrl('note/list')?>">Заметки</a>
                         <a href="">Список покупок</a>
                         <a href="">Статистика</a>
