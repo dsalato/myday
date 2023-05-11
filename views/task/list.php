@@ -31,13 +31,7 @@ $this->title = 'Задачи';
                     </a>
                 </div>
 
-
-
-
-
-
                 <div class="notes_btn">
-                    <input type="checkbox" name="done" value="1">
                     <a href="<?= Url::to(['task/delete', 'id' => $task->id])?>" data-method="post"><img src="<?= Yii::$app->request->baseUrl?>/web/img/delete.png" width="20px" alt="удалить"></a>
                     <a href="<?= Yii::$app->urlManager->createUrl('task/update?id=' . $task->id)?>"><img src="<?= Yii::$app->request->baseUrl?>/web/img/edit.png" width="20px" alt="изменить"></a>
                 </div>
