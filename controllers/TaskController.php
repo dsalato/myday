@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Task;
 use app\models\TaskSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -33,7 +34,7 @@ class TaskController extends Controller
     public function actionList()
     {
         $tasks = Task::findAll(['id_user'=>Yii::$app->user->identity->id]);
-//        var_dump($users); die();
+        ArrayHelper::multisort($tasks, ['time'], [SORT_ASC]);
         return $this->render('list', ['tasks'=>$tasks]);
 
     }

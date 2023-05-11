@@ -4,7 +4,7 @@ use app\models\Note;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Лист';
+$this->title = 'Заметки';
 ?>
 
 <div class="note-list">
@@ -17,16 +17,20 @@ $this->title = 'Лист';
         <?php
         foreach ($notes as $note) {
         ?>
-        <div class="notes">
-            <a href="<?= Url::to(['note/view', 'id' => $note->id])?>"><p><?= $note->name?></p></a>
+        <?php if ($note->priority == 1):?>
+                <div class="notes_color">
+        <?php else: ?>
+                <div class="notes">
+        <?php endif ?>
+                    <a href="<?= Url::to(['note/view', 'id' => $note->id])?>"><p><?= $note->name?></p></a>
 
 
-            <div class="notes_btn">
-                <input type="checkbox" name="done" value="1">
-                <a href="<?= Url::to(['note/delete', 'id' => $note->id])?>" data-method="post"><img src="<?= Yii::$app->request->baseUrl?>/web/img/delete.png" width="20px" alt="удалить"></a>
-                <a href="<?= Yii::$app->urlManager->createUrl('note/update?id=' . $note->id)?>"><img src="<?= Yii::$app->request->baseUrl?>/web/img/edit.png" width="20px" alt="изменить"></a>
-            </div>
-        </div>
+                    <div class="notes_btn">
+                        <input type="checkbox" name="done" value="1">
+                        <a href="<?= Url::to(['note/delete', 'id' => $note->id])?>" data-method="post"><img src="<?= Yii::$app->request->baseUrl?>/web/img/delete.png" width="20px" alt="удалить"></a>
+                        <a href="<?= Yii::$app->urlManager->createUrl('note/update?id=' . $note->id)?>"><img src="<?= Yii::$app->request->baseUrl?>/web/img/edit.png" width="20px" alt="изменить"></a>
+                    </div>
+                </div>
 
             <?php
         }

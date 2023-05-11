@@ -4,7 +4,7 @@ use app\models\Note;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Лист';
+$this->title = 'Задачи';
 ?>
 
 <div class="note-list">
@@ -21,12 +21,12 @@ $this->title = 'Лист';
         <?php
         foreach ($tasks as $task) {
             ?>
-            <div class="notes">
+            <div class="tasks">
                 <div class="task">
                     <a href="<?= Url::to(['task/view', 'id' => $task->id])?>">
                         <div class="task_content">
-                            <p><?= $task->time?></p>
-                            <p class="task_p"><?= $task->name?></p>
+                            <p><?= Yii::$app->getFormatter()->asDatetime($task->time, 'H:mm')?></p>
+                            <p><?= $task->name?></p>
                         </div>
                     </a>
                 </div>

@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Note;
 use app\models\NoteSearch;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -31,13 +32,16 @@ class NoteController extends Controller
             ]
         );
     }
+
     public function actionList()
     {
-        $notes = Note::findAll(['id_user'=>Yii::$app->user->identity->id]);
-//        var_dump($users); die();
-        return $this->render('list', ['notes'=>$notes]);
+        $notes = Note::findAll(['id_user' => Yii::$app->user->identity->id]);
+        ArrayHelper::multisort($notes, ['priority'], [SORT_DESC]);
+
+        return $this->render('list', ['notes' => $notes]);
 
     }
+
     /**
      * Lists all Note models.
      *

@@ -12,8 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="user-profile">
-    <div class="container">
     <h1 class="login_h1"><?= Html::encode($this->title) ?></h1>
+    <div class="container">
+
 
     <div class="view_user">
         <img src="<?= $model->photo?>" width="200px" alt="avatar">
