@@ -8,6 +8,11 @@ $this->title = 'Заметки';
 ?>
 
 <div class="note-list">
+    <div class="statistic">
+        <p class="stat_h5">Статистика</p>
+        <p>Количество заметок: <?= $count?></p>
+        <p>Количество выполненных заметок: <?= $done?></p>
+    </div>
     <div class="container">
         <div class="list">
             <h1 class="login_h1">Заметки</h1>

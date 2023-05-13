@@ -4,6 +4,8 @@ use app\models\Note;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+/** @var app\models\Task $model */
+
 $this->title = 'Задачи';
 ?>
 
@@ -15,8 +17,7 @@ $this->title = 'Задачи';
 
         </div>
         <div class="data">
-            <input type="date">
-            <p>Выбор даты</p>
+            <?= $this->render('_data') ?>
         </div>
         <?php
         foreach ($tasks as $task) {

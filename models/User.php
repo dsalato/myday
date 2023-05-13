@@ -100,7 +100,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getProducts()
     {
-        return $this->hasMany(Products::class, ['id_user' => 'id']);
+        return $this->hasMany(Product::class, ['id_user' => 'id']);
     }
 
     /**
@@ -110,7 +110,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getTasks()
     {
-        return $this->hasMany(Tasks::class, ['id_user' => 'id']);
+        return $this->hasMany(Task::class, ['id_user' => 'id']);
     }
     /**
      * {@inheritdoc}

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Note;
 use app\models\NoteSearch;
+use app\models\User;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -38,7 +39,18 @@ class NoteController extends Controller
         $notes = Note::findAll(['id_user' => Yii::$app->user->identity->id]);
         ArrayHelper::multisort($notes, ['priority'], [SORT_DESC]);
 
-        return $this->render('list', ['notes' => $notes]);
+        $notess = Yii::$app->user->identity->notes;
+        $done = 0;
+        $count = 0;
+//        var_dump($note);die;
+        foreach ($notess as $note) {
+            if($note->done == 1){
+                $done += 1;
+            }
+            $count += 1;
+
+        }
+        return $this->render('list', ['notes'=>$notes,'done'=>$done,'count'=>$count ]);
 
     }
 
