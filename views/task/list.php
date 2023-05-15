@@ -3,8 +3,9 @@
 use app\models\Note;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
-/** @var app\models\Task $model */
+/** @var app\models\TaskSearch $searchModel  */
 
 $this->title = 'Задачи';
 ?>
@@ -17,7 +18,7 @@ $this->title = 'Задачи';
 
         </div>
         <div class="data">
-            <?= $this->render('_data') ?>
+            <?= $this->render('_data'); ?>
         </div>
         <?php
         foreach ($tasks as $task) {
@@ -41,6 +42,8 @@ $this->title = 'Задачи';
             <?php
         }
         ?>
-
+        <?= LinkPager::widget([
+            'pagination' => $pages,
+        ]); ?>
     </div>
 </div>

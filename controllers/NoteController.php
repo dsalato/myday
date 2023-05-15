@@ -36,14 +36,13 @@ class NoteController extends Controller
 
     public function actionList()
     {
-        $notes = Note::findAll(['id_user' => Yii::$app->user->identity->id]);
+        $notes = Yii::$app->user->identity->notes;
         ArrayHelper::multisort($notes, ['priority'], [SORT_DESC]);
 
-        $notess = Yii::$app->user->identity->notes;
         $done = 0;
         $count = 0;
-//        var_dump($note);die;
-        foreach ($notess as $note) {
+
+        foreach ($notes as $note) {
             if($note->done == 1){
                 $done += 1;
             }

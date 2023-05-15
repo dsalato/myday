@@ -7,7 +7,10 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 <div class="data">
+
     <?php $form = ActiveForm::begin([
+        'action' => ['list'],
+        'method' => 'get',
         'id' => 'register-form',
         'fieldConfig' => [
             'template' => "{label}\n{input}\n{error}",
@@ -15,8 +18,18 @@ use yii\widgets\ActiveForm;
             'inputOptions' => ['class' => 'col-lg-3 form-control'],
             'errorOptions' => ['class' => 'col-lg-7'],
         ],
-    ]); ?>
-    <input type="date" name="data">
+    ]);
+    ?>
+
+    <p><?php
+        if (Yii::$app->request->getQueryParam('date'))
+            echo Yii::$app->request->getQueryParam('date');
+        else
+            echo date('Y-m-d');
+     ?></p>
+    <?= Html::input('date', 'date') ?>
     <button class="button-data">Выбор даты</button>
+
+
     <?php ActiveForm::end(); ?>
 </div>

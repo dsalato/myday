@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Task;
 use app\models\TaskSearch;
+use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -33,10 +34,19 @@ class TaskController extends Controller
     }
     public function actionList()
     {
-        $tasks = Task::findAll(['id_user'=>Yii::$app->user->identity->id]);
-        ArrayHelper::multisort($tasks, ['time'], [SORT_ASC]);
-        return $this->render('list', ['tasks'=>$tasks]);
+        if (Yii::$app->request->getQueryParam('date'))
+            $query = Task::find()->where(['id_user'=>Yii::$app->user->identity->id, 'date' => Yii::$app->request->getQueryParam('date')]);
+        else
+            $query = Task::find()->where(['id_user'=>Yii::$app->user->identity->id, 'date' => date('Y-m-d')]);
 
+        $pages = new Pagination(['totalCount' => $query->count(),  'pageSize' => 2]);
+        $tasks = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        ArrayHelper::multisort($tasks, ['time'], [SORT_ASC]);
+
+        return $this->render('list',  compact('tasks', 'pages'));
     }
     /**
      * Lists all Task models.
