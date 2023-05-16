@@ -92,11 +92,14 @@ button{
     letter-spacing: 2px;
 }
 .button-data{
-    margin-top:10px;
-    margin-left: 45px ;
     padding: 5px 25px;
     font-size: 13px;
     letter-spacing: 2px;
+    background-color: transparent;
+    color: #9699CA;
+    border: 2px solid #9699CA;
+    border-radius: 10px;
+    font-family:"MontserratBold", serif;
 }
 p{
     padding:0;
@@ -170,6 +173,18 @@ header > div{
     margin: 0 5px;
 
 }
+/* date */
+.date_filter{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+.date_p{
+    text-align: center;
+    color:#77C7B9 ;
+    font-family:"MontserratBold", serif;
+}
 /* main */
 .wrap {
     margin-left: auto;
@@ -226,15 +241,6 @@ header > div{
     justify-content: space-around;
     align-items: center;
     margin: 20px 0;
-}
-.data{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-}
-.data > p{
-    margin:0 40px;
 }
 .task_content{
     display: flex;
@@ -465,4 +471,90 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+/* pag */
+.paginations{
+    display: flex;
+    justify-content: center;
+}
+.pagination {
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+
+}
+.pagination li {
+    display: inline;
+    text-align: center;
+}
+.pagination a {
+    float: left;
+    display: block;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 5px 12px;
+    color: #fff;
+    margin-left: -1px;
+    border: 1px solid transparent;
+    line-height: 1.5;
+}
+.pagination a.active {
+    cursor: default;
+}
+.pagination a:active {
+    outline: none;
+}
+
+.pagination li:first-child a {
+    -moz-border-radius: 6px 0 0 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px 0 0 6px;
+}
+.pagination li:last-child span {
+    -moz-border-radius: 0 6px 6px 0;
+    -webkit-border-radius: 0;
+    border-radius: 0 6px 6px 0;
+}
+.pagination a {
+    border-color: #ddd;
+    color: #c55;
+    background: #fff;
+}
+.pagination a:hover {
+    background: #eee;
+}
+.pagination a.active, .pagination a:active {
+    border-color: #c55;
+    background: #c55;
+    color: #fff;
+}
+.pagination span {
+    float: left;
+    display: block;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 5px 12px;
+    color: #fff;
+    margin-left: -1px;
+    border: 1px solid transparent;
+    line-height: 1.5;
+}
+.pagination span.active {
+    cursor: default;
+}
+.pagination span:active {
+    outline: none;
+}
+.pagination span {
+    border-color: #ddd;
+    color: #c55;
+    background: #fff;
+}
+.pagination span:hover {
+    background: #eee;
+}
+.pagination span.active, .pagination span:active {
+    border-color: #c55;
+    background: #c55;
+    color: #fff;
 }

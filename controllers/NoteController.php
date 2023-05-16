@@ -4,8 +4,8 @@ namespace app\controllers;
 
 use app\models\Note;
 use app\models\NoteSearch;
-use app\models\User;
 use Yii;
+use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -36,9 +36,13 @@ class NoteController extends Controller
 
     public function actionList()
     {
-        $notes = Yii::$app->user->identity->notes;
-        ArrayHelper::multisort($notes, ['priority'], [SORT_DESC]);
+        $query = Note::find()->where(['id_user'=>Yii::$app->user->identity->id]);
 
+        $pages = new Pagination(['totalCount' => $query->count(),  'pageSize' => 5]);
+        $notes = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+        ArrayHelper::multisort($notes, ['priority'], [SORT_DESC]);
         $done = 0;
         $count = 0;
 
@@ -49,7 +53,7 @@ class NoteController extends Controller
             $count += 1;
 
         }
-        return $this->render('list', ['notes'=>$notes,'done'=>$done,'count'=>$count ]);
+        return $this->render('list', ['notes'=>$notes,'done'=>$done,'count'=>$count, 'pages'=>$pages ]);
 
     }
 

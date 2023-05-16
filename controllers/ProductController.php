@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Product;
 use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -32,9 +33,12 @@ class ProductController extends Controller
     }
     public function actionList()
     {
-        $products = Product::findAll(['id_user'=>Yii::$app->user->identity->id]);
-
-        return $this->render('list', ['products'=>$products]);
+        $query = Product::find()->where(['id_user'=>Yii::$app->user->identity->id]);
+        $pages = new Pagination(['totalCount' => $query->count(),  'pageSize' => 5]);
+        $products = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+        return $this->render('list', ['products'=>$products, 'pages'=>$pages]);
 
     }
     /**

@@ -17,9 +17,12 @@ $this->title = 'Задачи';
             <?= Html::a('Добавить задачу', ['create'], ['class' => 'button-list']) ?>
 
         </div>
-        <div class="data">
-            <?= $this->render('_data'); ?>
-        </div>
+
+        <?= $this->render('_data'); ?>
+        <?php if( Yii::$app->session->hasFlash('Notask') ): ?>
+            <p class="date_p"><?php echo Yii::$app->session->getFlash('Notask'); ?></p>
+        <?php endif;?>
+
         <?php
         foreach ($tasks as $task) {
             ?>
@@ -42,8 +45,11 @@ $this->title = 'Задачи';
             <?php
         }
         ?>
-        <?= LinkPager::widget([
-            'pagination' => $pages,
-        ]); ?>
+        <div class="paginations">
+            <?= LinkPager::widget([
+                'pagination' => $pages,
+            ]); ?>
+        </div>
+
     </div>
 </div>

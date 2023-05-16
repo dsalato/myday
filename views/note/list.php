@@ -3,6 +3,7 @@
 use app\models\Note;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 $this->title = 'Заметки';
 ?>
@@ -40,6 +41,11 @@ $this->title = 'Заметки';
             <?php
         }
         ?>
+        <div class="paginations">
+            <?= LinkPager::widget([
+                'pagination' => $pages,
+            ]); ?>
+        </div>
 
     </div>
 </div>

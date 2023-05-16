@@ -39,13 +39,17 @@ class TaskController extends Controller
         else
             $query = Task::find()->where(['id_user'=>Yii::$app->user->identity->id, 'date' => date('Y-m-d')]);
 
-        $pages = new Pagination(['totalCount' => $query->count(),  'pageSize' => 2]);
+
+        $pages = new Pagination(['totalCount' => $query->count(),  'pageSize' => 5]);
         $tasks = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
 
         ArrayHelper::multisort($tasks, ['time'], [SORT_ASC]);
+        if (empty($tasks)){
+            Yii::$app->session->setFlash('Notask', "Нет запланированных дел!");
 
+        }
         return $this->render('list',  compact('tasks', 'pages'));
     }
     /**

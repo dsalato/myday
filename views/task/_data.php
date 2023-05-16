@@ -20,15 +20,17 @@ use yii\widgets\ActiveForm;
         ],
     ]);
     ?>
+    <div class="date_filter">
+        <p><?php
+            if (Yii::$app->request->getQueryParam('date'))
+                echo Yii::$app->request->getQueryParam('date');
+            else
+                echo date('Y-m-d');
+            ?></p>
+        <?= Html::input('date', 'date') ?>
+        <button class="button-data">Выбор даты</button>
+    </div>
 
-    <p><?php
-        if (Yii::$app->request->getQueryParam('date'))
-            echo Yii::$app->request->getQueryParam('date');
-        else
-            echo date('Y-m-d');
-     ?></p>
-    <?= Html::input('date', 'date') ?>
-    <button class="button-data">Выбор даты</button>
 
 
     <?php ActiveForm::end(); ?>
