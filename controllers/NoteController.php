@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Note;
 use app\models\NoteSearch;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -38,22 +39,31 @@ class NoteController extends Controller
     {
         $query = Note::find()->where(['id_user'=>Yii::$app->user->identity->id]);
 
-        $pages = new Pagination(['totalCount' => $query->count(),  'pageSize' => 5]);
-        $notes = $query->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
-        ArrayHelper::multisort($notes, ['priority'], [SORT_DESC]);
-        $done = 0;
-        $count = 0;
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'priority' => SORT_DESC,
+                ]
+            ],
+        ]);
 
-        foreach ($notes as $note) {
-            if($note->done == 1){
-                $done += 1;
-            }
-            $count += 1;
+        $notes = $provider->getModels();
+        $pages = $provider->pagination;
+//        $pages = new Pagination(['totalCount' => $query->count(),  'pageSize' => 5]);
+//        $notes = $query->offset($pages->offset)
+//            ->limit($pages->limit)
+//            ->all();
+//
+//        ArrayHelper::multisort($notes, ['priority'], [SORT_DESC]);
 
-        }
-        return $this->render('list', ['notes'=>$notes,'done'=>$done,'count'=>$count, 'pages'=>$pages ]);
+        $count = count(Note::findAll(['id_user'=>Yii::$app->user->identity->id]));
+        $done = count(Note::findAll(['id_user'=>Yii::$app->user->identity->id,'done'=> 1]));
+
+        return $this->render('list', ['notes'=>$notes,'done'=>$done,'count'=>$count, 'pages' => $pages ]);
 
     }
 
