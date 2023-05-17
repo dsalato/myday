@@ -53,12 +53,6 @@ class NoteController extends Controller
 
         $notes = $provider->getModels();
         $pages = $provider->pagination;
-//        $pages = new Pagination(['totalCount' => $query->count(),  'pageSize' => 5]);
-//        $notes = $query->offset($pages->offset)
-//            ->limit($pages->limit)
-//            ->all();
-//
-//        ArrayHelper::multisort($notes, ['priority'], [SORT_DESC]);
 
         $count = count(Note::findAll(['id_user'=>Yii::$app->user->identity->id]));
         $done = count(Note::findAll(['id_user'=>Yii::$app->user->identity->id,'done'=> 1]));

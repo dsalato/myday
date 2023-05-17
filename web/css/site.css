@@ -180,6 +180,17 @@ header > div{
     align-items: center;
     margin: 20px 0;
 }
+.date_filter input{
+    padding: 5px 5px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    background-color: transparent;
+    color: #9699CA;
+    border: 2px solid #9699CA;
+    border-radius: 10px;
+    font-family:"MontserratBold", serif;
+
+}
 .date_p{
     text-align: center;
     color:#77C7B9 ;

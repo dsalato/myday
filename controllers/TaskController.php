@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Task;
 use app\models\TaskSearch;
+use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -39,18 +40,27 @@ class TaskController extends Controller
         else
             $query = Task::find()->where(['id_user'=>Yii::$app->user->identity->id, 'date' => date('Y-m-d')]);
 
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'time' => SORT_ASC,
+                ]
+            ],
+        ]);
 
-        $pages = new Pagination(['totalCount' => $query->count(),  'pageSize' => 5]);
-        $tasks = $query->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
+        $tasks = $provider->getModels();
+        $pages = $provider->pagination;
 
-        ArrayHelper::multisort($tasks, ['time'], [SORT_ASC]);
+
         if (empty($tasks)){
             Yii::$app->session->setFlash('Notask', "Нет запланированных дел!");
 
         }
-        return $this->render('list',  compact('tasks', 'pages'));
+        return $this->render('list',['tasks'=>$tasks, 'pages' => $pages ]);
     }
     /**
      * Lists all Task models.
