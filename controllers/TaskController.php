@@ -6,6 +6,7 @@ use app\models\Task;
 use app\models\TaskSearch;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -24,6 +25,33 @@ class TaskController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['create', 'list', 'view', 'update', 'delete'],
+                    'rules' => [
+                        [
+                            'actions' => ['create', 'list', 'delete'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function () {
+                                return !Yii::$app->user->identity->role;
+                            }
+                        ],
+                        [
+                            'actions' => ['view', 'update'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function () {
+                                $task = Task::findAll(['id'=>Yii::$app->request->getQueryParam('id')]);
+                                if ( $task[0]->id_user == Yii::$app->user->identity->id)
+                                    return true;
+                            }
+                        ]
+                    ],
+                    'denyCallback' => function () {
+                        return $this->goHome();
+                    },
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -61,21 +89,6 @@ class TaskController extends Controller
 
         }
         return $this->render('list',['tasks'=>$tasks, 'pages' => $pages ]);
-    }
-    /**
-     * Lists all Task models.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        $searchModel = new TaskSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
-        ]);
     }
 
     /**

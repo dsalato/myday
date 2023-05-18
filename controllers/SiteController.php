@@ -24,14 +24,22 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout'],
+                'only' => ['logout', 'login', 'register'],
                 'rules' => [
+                    [
+                        'actions' => ['login', 'register'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
                     [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function () {
+                    return $this->goHome();
+                },
             ],
             'verbs' => [
                 'class' => VerbFilter::class,

@@ -13,6 +13,7 @@ $this->title = 'Заметки';
         <p class="stat_h5">Статистика</p>
         <p>Количество заметок: <?= $count?></p>
         <p>Количество выполненных заметок: <?= $done?></p>
+        <?= $sort->link('id') . $sort->link('done') . $sort->link('priority'); ?>
     </div>
     <div class="container">
         <div class="list">

@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Product;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,6 +23,33 @@ class ProductController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['create', 'list', 'view', 'update', 'delete'],
+                    'rules' => [
+                        [
+                            'actions' => ['create', 'list', 'delete'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function () {
+                                return !Yii::$app->user->identity->role;
+                            }
+                        ],
+                        [
+                            'actions' => ['view', 'update'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function () {
+                                $product = Product::findAll(['id'=>Yii::$app->request->getQueryParam('id')]);
+                                if ( $product[0]->id_user == Yii::$app->user->identity->id)
+                                    return true;
+                            }
+                        ]
+                    ],
+                    'denyCallback' => function () {
+                        return $this->goHome();
+                    },
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -40,31 +68,6 @@ class ProductController extends Controller
             ->all();
         return $this->render('list', ['products'=>$products, 'pages'=>$pages]);
 
-    }
-    /**
-     * Lists all Product models.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Product::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
     }
 
     /**

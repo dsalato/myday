@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\User;
 use app\models\UserSearch;
+use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,7 +23,6 @@ class UserController extends Controller
     public function actionUsers()
     {
         $users = User::findAll(['role'=>'0']);
-//        var_dump($users); die();
         return $this->render('users', ['users'=>$users]);
     }
     /**
@@ -32,6 +33,38 @@ class UserController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['index','profile', 'view', 'update', 'delete'],
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'delete'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function () {
+                                return Yii::$app->user->identity->role;
+                            }
+                        ],
+                        [
+                            'actions' => ['profile'],
+                            'allow' => true,
+                            'roles' => ['@'],
+
+                        ],
+                        [
+                            'actions' => ['update'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function () {
+                                if ((Yii::$app->request->getQueryParam('id') == Yii::$app->user->identity->id) || Yii::$app->user->identity->role )
+                                    return true;
+                            }
+                        ]
+                    ],
+                    'denyCallback' => function () {
+                        return $this->goHome();
+                    },
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

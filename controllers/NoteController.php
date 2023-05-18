@@ -4,9 +4,12 @@ namespace app\controllers;
 
 use app\models\Note;
 use app\models\NoteSearch;
+use app\models\User;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
+use yii\data\Sort;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -25,6 +28,33 @@ class NoteController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['create', 'list', 'view', 'update', 'delete'],
+                    'rules' => [
+                        [
+                            'actions' => ['create', 'list', 'delete'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function () {
+                                return !Yii::$app->user->identity->role;
+                            }
+                        ],
+                        [
+                            'actions' => ['view', 'update'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function () {
+                                $note = Note::findAll(['id'=>Yii::$app->request->getQueryParam('id')]);
+                                if ( $note[0]->id_user == Yii::$app->user->identity->id)
+                                    return true;
+                            }
+                        ]
+                    ],
+                    'denyCallback' => function () {
+                        return $this->goHome();
+                    },
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -37,7 +67,17 @@ class NoteController extends Controller
 
     public function actionList()
     {
-        $query = Note::find()->where(['id_user'=>Yii::$app->user->identity->id]);
+        $sort = new Sort([
+            'attributes' => [
+                'priority' => ['label' => 'Приоритет'],
+                'id' => ['label' => 'Дата'],
+                'done' => ['label' => 'Выполненные']
+            ],
+        ]);
+
+        $query = Note::find()
+            ->where(['id_user' => Yii::$app->user->identity->id])
+            ->orderBy($sort->orders);
 
         $provider = new ActiveDataProvider([
             'query' => $query,
@@ -54,27 +94,11 @@ class NoteController extends Controller
         $notes = $provider->getModels();
         $pages = $provider->pagination;
 
-        $count = count(Note::findAll(['id_user'=>Yii::$app->user->identity->id]));
-        $done = count(Note::findAll(['id_user'=>Yii::$app->user->identity->id,'done'=> 1]));
+        $count = count(Note::findAll(['id_user' => Yii::$app->user->identity->id]));
+        $done = count(Note::findAll(['id_user' => Yii::$app->user->identity->id, 'done' => 1]));
 
-        return $this->render('list', ['notes'=>$notes,'done'=>$done,'count'=>$count, 'pages' => $pages ]);
+        return $this->render('list', ['notes' => $notes, 'done' => $done, 'count' => $count, 'pages' => $pages, 'sort' => $sort,]);
 
-    }
-
-    /**
-     * Lists all Note models.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        $searchModel = new NoteSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
     }
 
     /**
