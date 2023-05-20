@@ -13,7 +13,9 @@ $this->title = 'Заметки';
         <p class="stat_h5">Статистика</p>
         <p>Количество заметок: <?= $count?></p>
         <p>Количество выполненных заметок: <?= $done?></p>
-        <?= $sort->link('id') . $sort->link('done') . $sort->link('priority'); ?>
+        <div class="stat_sort">
+            <?= $sort->link('id') . $sort->link('done') . $sort->link('priority'); ?>
+        </div>
     </div>
     <div class="container">
         <div class="list">
@@ -24,7 +26,9 @@ $this->title = 'Заметки';
         <?php
         foreach ($notes as $note) {
         ?>
-        <?php if ($note->priority == 1):?>
+        <?php if ($note->done == 1):?>
+                <div class="notes_done">
+        <?php elseif ($note->priority == 1):?>
                 <div class="notes_color">
         <?php else: ?>
                 <div class="notes">
@@ -33,7 +37,9 @@ $this->title = 'Заметки';
 
 
                     <div class="notes_btn">
-                        <input type="checkbox" name="done" value="1">
+                        <?= $this->render('_done', [
+                            'model' => $note,
+                        ]) ?>
                         <a href="<?= Url::to(['note/delete', 'id' => $note->id])?>" data-method="post"><img src="<?= Yii::$app->request->baseUrl?>/web/img/delete.png" width="20px" alt="удалить"></a>
                         <a href="<?= Yii::$app->urlManager->createUrl('note/update?id=' . $note->id)?>"><img src="<?= Yii::$app->request->baseUrl?>/web/img/edit.png" width="20px" alt="изменить"></a>
                     </div>

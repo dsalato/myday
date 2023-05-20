@@ -34,8 +34,10 @@ class Note extends \yii\db\ActiveRecord
         return [
             [['id_user', 'name', 'description'], 'required'],
             [['id_user', 'priority', 'done'], 'integer'],
-            [['description'], 'string'],
-            [['name'], 'string', 'max' => 255],
+            [['description'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 50],
+            [['name', 'description'], 'match', 'pattern' => '/^[а-яА-ЯёЁa-zA-Z0-9 ]+$/u'],
+
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id_user' => 'id']],
         ];
     }

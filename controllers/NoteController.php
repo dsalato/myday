@@ -97,6 +97,13 @@ class NoteController extends Controller
         $count = count(Note::findAll(['id_user' => Yii::$app->user->identity->id]));
         $done = count(Note::findAll(['id_user' => Yii::$app->user->identity->id, 'done' => 1]));
 
+        if ($this->request->isPost) {
+            $model = Note::findOne(['id' => Yii::$app->request->post('Note')['id']]);
+            $model->done = Yii::$app->request->post('Note')['done'];
+            $model->save();
+            $this->redirect('list');
+        }
+
         return $this->render('list', ['notes' => $notes, 'done' => $done, 'count' => $count, 'pages' => $pages, 'sort' => $sort,]);
 
     }

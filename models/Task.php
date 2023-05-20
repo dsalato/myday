@@ -34,7 +34,9 @@ class Task extends \yii\db\ActiveRecord
             [['id_user', 'name', 'date', 'time'], 'required'],
             [['id_user'], 'integer'],
             [['date', 'time'], 'safe'],
-            [['name'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 50],
+            [['name'], 'match', 'pattern' => '/^[а-яА-ЯёЁa-zA-Z0-9 ]+$/u'],
+
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id_user' => 'id']],
         ];
     }

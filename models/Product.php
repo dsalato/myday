@@ -33,7 +33,8 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['id_user', 'name', 'count', 'price'], 'required'],
             [['id_user', 'count', 'price'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 50],
+            [['name'], 'match', 'pattern' => '/^[а-яА-ЯёЁa-zA-Z0-9 ]+$/u'],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
