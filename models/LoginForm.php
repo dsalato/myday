@@ -50,9 +50,8 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Неправильный пароль или логин');
             }
         }
     }
@@ -65,7 +64,6 @@ class LoginForm extends Model
     {
 
         if ($this->validate()) {
-//            var_dump(Yii::$app->user); die;
             return Yii::$app->user->login($this->getUser());
         }
         return false;

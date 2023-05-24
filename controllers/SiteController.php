@@ -93,12 +93,8 @@ class SiteController extends Controller
                 $model->photo = $uploadedFileName;
                 // принудительная установка роли
                 $model->role = 0;
-                $model->password = $model->password;
+                $model->password = Yii::$app->security->generatePasswordHash($model->password);
                 $model->save(false);
-                // установка флеш-сообщения, для улучшения юзабилити
-                Yii::$app->session
-                    ->setFlash('success', 'Вы успешно зарегистрированы!');
-                // перенаправление на главную
                 return $this->goHome();
             }
         }

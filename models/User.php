@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Codeception\Extension\Recorder;
 use Yii;
 use yii\web\IdentityInterface;
 /**
@@ -53,9 +54,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             [['first_name', 'last_name', 'email', 'username', 'password', 'file'], 'required'],
             [['role'], 'integer'],
-            [['first_name', 'last_name', 'email', 'username', 'password', 'photo'], 'string', 'max' => 255],
+            [['first_name', 'last_name', 'email', 'username', 'password'], 'validateNoSpace'],
+            [['first_name', 'last_name', 'email', 'username', 'password', 'photo'], 'string',  'max' => 255],
             [['first_name','last_name'], 'match', 'pattern' => '/^[а-яА-ЯёЁ ]+$/u'],
             [['username','password'], 'match', 'pattern' => '/^[a-zA-Z0-9 ]+$/u'],
+            [['password'], 'string', 'max' => 10],
             [['email'], 'email'],
             [['username'], 'unique'],
             [['repeat_password'], 'compare', 'compareAttribute' => 'password'],
@@ -78,9 +81,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             return $url;
         return false;
     }
-    /**
-     * {@inheritdoc}
-     */
+
+    public function validateNoSpace($attribute, $params){
+        if(stristr($this->$attribute, ' '))
+            $this->$attribute = str_replace(' ', '', $this->$attribute);
+        return $this->$attribute;
+    }
 
 
     /**
@@ -167,6 +173,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return Yii::$app->security->validatePassword($password, $this->password);
     }
 }

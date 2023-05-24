@@ -12,7 +12,6 @@ $this->title = 'Регистрация';
         <h1 class="login_h1">Регистрация</h1>
     <?php $form = ActiveForm::begin([
         'id' => 'register-form',
-        'enableAjaxValidation' => true,
         'fieldConfig' => [
             'template' => "{label}\n{input}\n{error}",
             'labelOptions' => ['class' => 'col-form-label'],

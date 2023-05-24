@@ -27,9 +27,9 @@ $this->title = 'Заметки';
         foreach ($notes as $note) {
         ?>
         <?php if ($note->done == 1):?>
-                <div class="notes_done">
-        <?php elseif ($note->priority == 1):?>
                 <div class="notes_color">
+        <?php elseif ($note->priority == 1):?>
+                <div class="notes_done">
         <?php else: ?>
                 <div class="notes">
         <?php endif ?>
