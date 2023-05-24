@@ -295,12 +295,13 @@ header > div{
 }
 .stat_sort{
     display: flex;
-    justify-content: space-between;
+    justify-content: right;
     align-items: center;
-    margin: 50px 0;
+    margin: 20px 20px 0 20px;
 }
 .stat_sort a{
     font-family:"MontserratRegular", serif;
+    margin-left: 20px;
 }
 .stat_sort a:hover{
     color: #F47D6C;

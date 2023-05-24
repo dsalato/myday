@@ -79,6 +79,8 @@ class NoteController extends Controller
             ->where(['id_user' => Yii::$app->user->identity->id])
             ->orderBy($sort->orders);
 
+
+
         $provider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
@@ -96,6 +98,7 @@ class NoteController extends Controller
 
         $count = count(Note::findAll(['id_user' => Yii::$app->user->identity->id]));
         $done = count(Note::findAll(['id_user' => Yii::$app->user->identity->id, 'done' => 1]));
+        $urgent = count(Note::findAll(['id_user' => Yii::$app->user->identity->id, 'priority' => 1, 'done' => 0]));
 
         if ($this->request->isPost) {
             $model = Note::findOne(['id' => Yii::$app->request->post('Note')['id']]);
@@ -103,8 +106,24 @@ class NoteController extends Controller
             $model->save();
             $this->redirect('list');
         }
-
-        return $this->render('list', ['notes' => $notes, 'done' => $done, 'count' => $count, 'pages' => $pages, 'sort' => $sort,]);
+        $data = [
+            'labels' => ['Обычные', 'Срочные', 'Выполненные'],
+            'datasets' => [
+                [
+                    'label' => 'Заметки',
+                    'backgroundColor' => ['#9699CA', '#F47D6C', '#77C7B9'],
+                    'data' => [$count-$done-$urgent, $urgent, $done],
+                ]
+            ],
+        ];
+        return $this->render('list', [
+            'notes' => $notes,
+            'done' => $done,
+            'count' => $count,
+            'pages' => $pages,
+            'sort' => $sort,
+            'data' => $data,
+        ]);
 
     }
 
