@@ -9,7 +9,6 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
-use app\models\ContactForm;
 use yii\web\UploadedFile;
 use yii\widgets\ActiveForm;
 
@@ -78,7 +77,7 @@ class SiteController extends Controller
 
     public function actionRegister()
     {
-        $model = new \app\models\User();
+        $model = new User();
         // ajax проверка
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -112,7 +111,6 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-//
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
@@ -142,18 +140,7 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
 
 
 }

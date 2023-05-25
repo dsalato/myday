@@ -11,23 +11,7 @@ $this->title = 'Заметки';
 ?>
 
 <div class="note-list">
-    <div class="statistic">
-        <p class="stat_h5">Статистика</p>
-        <p>Количество заметок: <?= $count ?></p>
-        <div>
-            <?php
-            echo ChartJs::widget([
-                'type' => 'pie',
-                'options' => [
-                    'height' => 260,
-                    'width' => 360,
-                ],
-                'data' => $data,
-            ]);
-            ?>
-        </div>
-
-    </div>
+    <?= $this->render('statistic', ['data' => $data, 'count' => $count]) ?>
     <div class="container">
         <div class="list">
             <h1 class="login_h1">Заметки</h1>
@@ -38,9 +22,7 @@ $this->title = 'Заметки';
             <?= $sort->link('id') . $sort->link('done') . $sort->link('priority'); ?>
         </div>
         <?php
-        foreach ($notes
-
-        as $note) {
+        foreach ($notes as $note) {
         ?>
         <?php if ($note->done == 1): ?>
         <div class="notes_color">

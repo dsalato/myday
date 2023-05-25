@@ -32,9 +32,7 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            // username and password are both required
             [['username', 'password'], 'required'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
@@ -62,7 +60,6 @@ class LoginForm extends Model
      */
     public function login()
     {
-
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser());
         }

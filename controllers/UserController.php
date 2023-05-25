@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\User;
 use app\models\UserSearch;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -19,11 +20,6 @@ class UserController extends Controller
     public function actionProfile()
     {
         return $this->render('profile');
-    }
-    public function actionUsers()
-    {
-        $users = User::findAll(['role'=>'0']);
-        return $this->render('users', ['users'=>$users]);
     }
     /**
      * @inheritDoc
@@ -82,11 +78,10 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find(),
+        ]);
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -109,22 +104,6 @@ class UserController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
-    {
-        $model = new User();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
 
     /**
      * Updates an existing User model.

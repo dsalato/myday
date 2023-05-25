@@ -118,8 +118,6 @@ class TaskController extends Controller
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['list', 'id' => $model->id]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [

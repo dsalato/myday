@@ -14,7 +14,7 @@ use Yii;
  * @property int|null $priority
  * @property int|null $done
  *
- * @property Users $user
+ * @property User $user
  */
 class Note extends \yii\db\ActiveRecord
 {
